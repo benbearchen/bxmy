@@ -1,0 +1,6 @@
+# xetex
+*.log
+*.aux
+*.out
+*~
+
