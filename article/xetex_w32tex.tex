@@ -2,47 +2,121 @@
 
 \usepackage{zhfontcfg}
 \usepackage[colorlinks,linkcolor=black]{hyperref}
-%opening
-\title{XeTeX 从 w32tex.org 安装记录}
+\usepackage{color,xcolor}            % 支持彩色文本、底色、文本框等
+\usepackage{listings}
+\lstset{tabsize=4, keepspaces=true,
+    xleftmargin=2em,xrightmargin=0em, aboveskip=1em,
+    backgroundcolor=\color{gray!20},  % 定义背景颜色
+    frame=none,                       % 表示不要边框
+    extendedchars=false,              % 解决代码跨页时，章节标题，页眉等汉字不显示的问题
+    basicstyle=\small,
+    keywordstyle=\color{black}\bfseries,
+    breakindent=10pt,
+    identifierstyle=,                 % nothing happens
+    commentstyle=\color{blue}\small,  % 注释的设置
+    morecomment=[l][\color{blue}]{\#},
+    stepnumber=1,numberstyle=\scriptsize,
+    showstringspaces=false,
+    showspaces=false,
+    flexiblecolumns=true,
+    breaklines=true, breakautoindent=true,breakindent=4em,
+    escapeinside={/*@}{@*/},
+}
+
+%\newcommand{\shell}[1]{\colorbox{cyan!15}{\mono{#1}}}
+\usepackage{framed}
+\newcommand{\shell}[1]{\definecolor{shadecolor}{rgb}{0.5,0.95,0.95} \begin{shaded}\mono{#1}\end{shaded}}
+
+%\parindent=1pt
+\setlength{\parskip}{2pt}
+
+\title{\XeTeX 从 w32tex.org 安装记录}
 \author{BenBear}
 \begin{document}
 \maketitle
 
 \section{下载准备}
 
-XeTeX 可能有很多安装方法，这里使用从 http://w32tex.org/ 下载然后安装的方法。\par
+\XeTeX 可能有很多安装方法，这里使用从 http://w32tex.org/ 下载然后安装的方法。
 
 \section{安装过程}
 \subsection{创建安装目录}
-安装目录可以到某个目录。当然路径名字中没有空格和中文等是安全的。假设要安装到 \mono{C:{\textbackslash}Tools{\textbackslash}XeTex} 。\par
+安装目录可以到某个目录。当然路径名字中没有空格和中文是个安全的选择。假设要安装到 \mono{C:{\textbackslash}Tools{\textbackslash}XeTeX}。
 
 \subsection{解压 XeTeX}
-在 XeTeX 目录下创建 \mono{texinst2013} 目录，再把 texinst2013.zip 的文件解压到此目录下。得到可执行文件：\\
-\mono{XeTeX{\textbackslash}texinst2013{\textbackslash}texinst2013.exe}\par
-接着把需要安装的包（\mono{*.tar.tx}）拷到比如 \mono{XeTeX{\textbackslash}pkg} 目录下。然后可以在 cmd 下执行如此命令：\\
-\mono{{\textbackslash}> set PATH=\%PATH\%;C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}texinst2013\\
-{\textbackslash}> texinst2013 pkg}\par
-然后就可以等待解压完成。解压完成后，会有添加 PATH 路径的提示，一般是要指 \mono{C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}bin} 目录。添加 PATH 后重新进入 cmd，就可以开始配置字体了。\par
+在 \mono{XeTeX} 目录下创建 \mono{texinst2013} 目录，再把 texinst2013.zip 的文件解压到此目录下。得到可执行文件：\mono{XeTeX{\textbackslash}texinst2013{\textbackslash}texinst2013.exe}
+
+    接着把需要安装的包（\mono{*.tar.tx}）拷到比如 \mono{XeTeX{\textbackslash}pkg} 目录下。然后可以在 cmd 下执行如此命令：
+
+    \shell{\noindent{\textbackslash}> set PATH=\%PATH\%;C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}texinst2013\\
+{\textbackslash}> texinst2013 pkg}
+
+    等解压完成后，会有添加 \mono{\emph{PATH}} 路径的提示，一般是指 \mono{C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}bin} 目录。添加 \mono{\emph{PATH}} 后重新进入 cmd，就可以开始配置字体了。
 
 \subsection{更新字体}
-以上解压、配置完成以后，就可以扫描字体了。当然首先是安装字体。\par
+以上解压、配置完成以后，就可以扫描字体了。当然首先是安装字体。
 
 \subsubsection{安装字体}
-包 zhfontcfg.sty 需要几种字体，在资源里已经包含了。把几种字体安装或复制到 Windows 的系统字体目录 \mono{\%Windows\%{\textbackslash}Fonts} 就可以了。\\
-如果你有自己钟爱的字体，当然也是一样装起来就好了。\par
+包 zhfontcfg.sty 需要几种字体，在资源里已经包含了。把几种字体安装或复制到 Windows 的系统字体目录 \mono{\%\emph{Windows}\%{\textbackslash}Fonts} 就可以了。\\
+如果你有自己钟爱的字体，当然也是一样装起来就好了。
 
 \subsubsection{扫描字体}
-字体安装好后，在 cmd 执行以下命令：\\
-\mono{{\textbackslash}> fc-cache -v}\\
-完成后会提示 \mono{success}，表示系统字体已经缓存好了。\par
+字体安装好后，在 cmd 执行以下命令：
+
+    \shell{\noindent{\textbackslash}> fc-cache -v}
+
+完成后会提示 success，表示系统字体已经缓存好了。使用 \mono{fc-list} 可以查看已经扫描到的字体：
+
+    \shell{\noindent{\textbackslash}> fc-list | grep YaHei}
 
 \subsection{更新缺失包}
-如果在使用 XeTeX 的过程中发现需要安装当前没有的包，那么把包下载到比如 pkg2 的临时目录，重新执行 \mono{texinst2013 pkg2} 即可（当然要临时修改 PATH）。\par
+如果在使用 {\XeTeX} 的过程中发现需要安装当前没有的包，那么把包下载到比如 \mono{XeTeX{\textbackslash}pkg2} 的临时目录，重新执行 \mono{texinst2013} 即可：
+    
+    \shell{\noindent{\textbackslash}> set PATH=\%PATH\%;C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}texinst2013\\
+{\textbackslash}> texinst2013 pkg2}
 
 \section{TeX 测试}
-当然我可能喜欢 vim 而没有装专用的 GUI 编辑器，下面说的都是在命令行下编译 PDF。\par
+当然我可能喜欢 vim 而没有装专用的 GUI 编辑器，下面说的都是在命令行下编译 PDF。
 
-\section{附录}
+    首先拷贝以下 {\TeX} 代码\footnote{代码在中文字符前插入“\mono{- }”是因为 lstlisting 可能对中英文混排支持有问题}到任意目录下的一个 \mono{test.tex} 文件：
+
+\newpage
+\begin{lstlisting}[language={[LaTeX]TeX}]
+\documentclass{article}
+
+\usepackage{zhfontcfg}
+\usepackage[colorlinks,linkcolor=black]{hyperref}
+\title{latex 多字体简易示例}
+\author{- 颜开}
+
+\begin{document}
+\maketitle
+\section{- 楷体}
+\kai{- 楷体}
+\section{- 黑体}
+\hei{- 黑体}
+\end{document}
+\end{lstlisting}
+
+    然后再 cmd 进入 \mono{test.tex} 所在目录，执行命令：
+
+    \shell{\noindent{\textbackslash}> xelatex test.tex}
+
+    注意是命令名字是 \colorbox{cyan!20}{\mono{xelatex}} 而不是 \mono{xetex}。后者虽然可以运行，但是似乎并不支持 \LaTeX。如果没有错误，命令会直接结束，最后会有一个 PDF 的名字提示——这里会是 \mono{test.pdf}。打开 \mono{test.pdf} 就可以查看输出结果了。
+
+\section{vim 定义快捷键}
+为了方便 vim 下使用 {\XeTeX} 编译并打开 PDF 查看，这里还定义了一些简单的 vim 命令与快捷键（需要写入配置文件如 \mono{\_vimrc}）。
+\begin{lstlisting}
+com XeTeX silent !start cmd /c "xelatex -output-directory=%:p:h % && explorer %:p:r.pdf"
+nmap <A-S-x> :XeTeX<CR>
+com PDFTeX silent !start explorer %:p:r.pdf
+\end{lstlisting}
+
+    其中 :XeTeX 作为外部命令，执行后会在新控制台窗口调用 xelatex 编译当前的 tex 缓冲区。并在编译无误后，直接用 Windows 的默认软件打开生成的 PDF 文件。而 :PDFTeX 命令则是直接打开之前生成的 PDF 文件。对 :XeTeX 定义了一个 Alt-Shift-x 的快捷键，使用更方便。
+
+    如果做得更好一点，还需要判断当前缓冲区是否已经保存。保存了的 tex 编译才更安全。
+
+\section{参考资料}
 \begin{enumerate}
 \item \mono{http://blog.csdn.net/yming0221/article/details/7410027} \\
 LaTeX使用--使用XeLaTeX支持中文（可以放弃Office了） by yming0221 \\
@@ -50,6 +124,10 @@ LaTeX使用--使用XeLaTeX支持中文（可以放弃Office了） by yming0221 \
 XeTeX 快速上手 by electronic\_blue \\
 \item \mono{http://w32tex.org/index-zh.html} \\
 w32tex 官方中文说明 \\
+\item \mono{https://wiki.freebsdchina.org/doc/x/xelatex} \\
+TeX 中文化的捷径：使用 xelatex \\
+\item \mono{http://www.freezhongzi.info/?p=90} \\
+Windows下去掉Vim执行外部命令的烦人提示 by 波波 \\
 \end{enumerate}
 \end{document}
 
