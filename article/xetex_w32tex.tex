@@ -30,57 +30,63 @@
 %\parindent=1pt
 \setlength{\parskip}{2pt}
 
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
 \title{\XeTeX 从 w32tex.org 安装记录}
 \author{BenBear}
 \begin{document}
 \maketitle
 
-\section{下载准备}
+\section{XeTeX 与 w32tex}
 
-\XeTeX 可能有很多安装方法，这里使用从 http://w32tex.org/ 下载然后安装的方法。
+{\XeTeX} 对 Unicode 的支持，让我再次心动，回归 {\TeX} 的世界。{\XeTeX} 可能有很多安装方法，有 TeXLive 这种巨无霸，但也有小巧的 w32tex。这里使用从 http://w32tex.org/ 下载然后安装的方法。目前 w32tex 正好是 2013 版（安装程序的名字看来）。
 
 \section{安装过程}
+w32tex 有简单的安装程序，然后再下载若干宏包，就可以安装了。下面逐步说明。
+
 \subsection{创建安装目录}
 安装目录可以到某个目录。当然路径名字中没有空格和中文是个安全的选择。假设要安装到 \mono{C:{\textbackslash}Tools{\textbackslash}XeTeX}。
 
+\subsection{下载安装包}
+第一个要下载的是简易安装程序，目前叫 \mono{texinst2013.zip}。在 \mono{XeTeX} 目录下创建一个 \mono{pkg} 的目录备用。然后在 w32tex 中文首页（\mono{http://w32tex.org/index-zh.html}）挑选挑选一个镜像。找到 \mono{texinst2013.zip} 并下载到 \mono{XeTeX{\textbackslash}pkg} 目录。
+
+除了安装程序，还要下载 {\TeX} 所需要的宏包，依然放到 \mono{pkg} 目录。w32tex 首页有说明从最小安装、标准安装到完全安装所需要的数量不等的宏包。建议是下载最小安装的全部和标准安装中的大部分包（我没有装不认识的 xindy 和 xypic 两个），然后加上完全安装中可能需要包。不“完全”安装是因为安装后的体积问题。选择的 23 个宏包本身占用 383M 空间，解压安装后占用 845M，两者放一起就上 G 了。
+
+w32tex 有对 64 位的支持，也有提供 64 位的宏包下载。不过装了 64 位宏包后，觉得有问题。后来重新安装的时候就不考虑 64 位的事情了。毕竟 32 位也能用得好好的。
+
+以下就是我使用的包列表，编译这篇 {\TeX} 没有问题，虽然不一定是最简的：\\context.tar.xz dvipdfm-w32.tar.xz dvipsk-w32.tar.xz jtex-w32.tar.xz latex.tar.xz ltxpkgs.tar.xz luatex-w32.tar.xz luatexja.tar.xz makeindex-w32.tar.xz manual.tar.xz mftools.tar.xz pdftex-w32.tar.xz platex.tar.xz ptex-w32.tar.xz t1fonts.tar.xz timesnew.tar.xz txpx-pazofonts.tar.xz txtutil.tar.xz utf.tar.xz vf-a2bk.tar.xz web2c-lib.tar.xz web2c-w32.tar.xz xetex-w32.tar.xz
+
 \subsection{解压 XeTeX}
-在 \mono{XeTeX} 目录下创建 \mono{texinst2013} 目录，再把 texinst2013.zip 的文件解压到此目录下。得到可执行文件：\mono{XeTeX{\textbackslash}texinst2013{\textbackslash}texinst2013.exe}
+在 \mono{XeTeX} 目录下创建 \mono{texinst2013} 目录，再把 \mono{XeTeX{\textbackslash}pkg{\textbackslash}texinst2013.zip} 包含的文件解压到此目录下。得到可执行文件：\mono{XeTeX{\textbackslash}texinst2013{\textbackslash}texinst2013.exe}。有了这个就可以正式解压安装了。在 cmd 执行如下命令：
 
-    接着把需要安装的包（\mono{*.tar.tx}）拷到比如 \mono{XeTeX{\textbackslash}pkg} 目录下。然后可以在 cmd 下执行如此命令：
-
-    \shell{\noindent{\textbackslash}> set PATH=\%PATH\%;C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}texinst2013\\
+\shell{\noindent{\textbackslash}> set PATH=\%PATH\%;C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}texinst2013\\
 {\textbackslash}> texinst2013 pkg}
 
-    等解压完成后，会有添加 \mono{\emph{PATH}} 路径的提示，一般是指 \mono{C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}bin} 目录。添加 \mono{\emph{PATH}} 后重新进入 cmd，就可以开始配置字体了。
+等解压完成后，会有添加 \mono{\emph{PATH}} 路径的提示，这里应该是指是添加 \mono{C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}bin} 目录。添加 \mono{\emph{PATH}} 后重新进入 cmd，就可以开始分析字体了。
 
 \subsection{更新字体}
-以上解压、配置完成以后，就可以扫描字体了。当然首先是安装字体。
+XeTeX 可以使用系统的字体。本例子使用的宏包 zhfontcfg.sty 需要几种字体，可从 \mono{https://github.com/benbearchen/benbeares/tree/master/tex/fonts} 下载。把几种字体安装或复制到 Windows 的系统字体目录 \mono{\%\emph{Windows}\%{\textbackslash}Fonts} 就可以了。如果你有自己钟爱的字体，当然也是一样装起来就好了。字体安装好后，在 cmd 执行以下命令：
 
-\subsubsection{安装字体}
-包 zhfontcfg.sty 需要几种字体，在资源里已经包含了。把几种字体安装或复制到 Windows 的系统字体目录 \mono{\%\emph{Windows}\%{\textbackslash}Fonts} 就可以了。\\
-如果你有自己钟爱的字体，当然也是一样装起来就好了。
+\shell{\noindent{\textbackslash}> fc-cache -v}
 
-\subsubsection{扫描字体}
-字体安装好后，在 cmd 执行以下命令：
+完成后会提示 success，表示系统字体已经缓存好了。执行 cmd 命令 \mono{fc-list} 可以查看已经扫描到的字体：
 
-    \shell{\noindent{\textbackslash}> fc-cache -v}
+\shell{\noindent{\textbackslash}> fc-list | grep YaHei}
 
-完成后会提示 success，表示系统字体已经缓存好了。使用 \mono{fc-list} 可以查看已经扫描到的字体：
-
-    \shell{\noindent{\textbackslash}> fc-list | grep YaHei}
-
-\subsection{更新缺失包}
+\subsection{安装新包或缺失包}
 如果在使用 {\XeTeX} 的过程中发现需要安装当前没有的包，那么把包下载到比如 \mono{XeTeX{\textbackslash}pkg2} 的临时目录，重新执行 \mono{texinst2013} 即可：
     
-    \shell{\noindent{\textbackslash}> set PATH=\%PATH\%;C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}texinst2013\\
+\shell{\noindent{\textbackslash}> set PATH=\%PATH\%;C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}texinst2013\\
 {\textbackslash}> texinst2013 pkg2}
 
 \section{TeX 测试}
 当然我可能喜欢 vim 而没有装专用的 GUI 编辑器，下面说的都是在命令行下编译 PDF。
+首先拷贝以下 {\TeX} 代码\footnote{代码在中文字符前插入“\mono{- }”是因为 lstlisting 可能对中英文混排支持有问题}到任意目录下的一个 \mono{test.tex} 文件：
 
-    首先拷贝以下 {\TeX} 代码\footnote{代码在中文字符前插入“\mono{- }”是因为 lstlisting 可能对中英文混排支持有问题}到任意目录下的一个 \mono{test.tex} 文件：
-
-\newpage
+%\newpage
 \begin{lstlisting}[language={[LaTeX]TeX}]
 \documentclass{article}
 
@@ -98,36 +104,47 @@
 \end{document}
 \end{lstlisting}
 
-    然后再 cmd 进入 \mono{test.tex} 所在目录，执行命令：
+然后再 cmd 进入 \mono{test.tex} 所在目录，执行命令：
 
-    \shell{\noindent{\textbackslash}> xelatex test.tex}
+\shell{\noindent{\textbackslash}> xelatex test.tex}
 
-    注意是命令名字是 \colorbox{cyan!20}{\mono{xelatex}} 而不是 \mono{xetex}。后者虽然可以运行，但是似乎并不支持 \LaTeX。如果没有错误，命令会直接结束，最后会有一个 PDF 的名字提示——这里会是 \mono{test.pdf}。打开 \mono{test.pdf} 就可以查看输出结果了。
+注意是命令名字是 \colorbox{cyan!20}{\mono{xelatex}} 而不是 \mono{xetex}。后者虽然可以运行，但是似乎并不支持 \LaTeX。如果没有错误，命令会直接结束，最后会有一个 PDF 的名字提示——这里会是 \mono{test.pdf}。打开 \mono{test.pdf} 就可以查看输出结果了。
 
 \section{vim 定义快捷键}
-为了方便 vim 下使用 {\XeTeX} 编译并打开 PDF 查看，这里还定义了一些简单的 vim 命令与快捷键（需要写入配置文件如 \mono{\_vimrc}）。
+为了方便 vim 下使用 {\XeTeX} 编译并打开 PDF 查看，这里还定义了一些简单的 vim 命令与快捷键（需要写入配置文件如 \mono{\_vimrc}）：
 \begin{lstlisting}
 com XeTeX silent !start cmd /c "xelatex -output-directory=%:p:h % && explorer %:p:r.pdf"
 nmap <A-S-x> :XeTeX<CR>
 com PDFTeX silent !start explorer %:p:r.pdf
 \end{lstlisting}
 
-    其中 :XeTeX 作为外部命令，执行后会在新控制台窗口调用 xelatex 编译当前的 tex 缓冲区。并在编译无误后，直接用 Windows 的默认软件打开生成的 PDF 文件。而 :PDFTeX 命令则是直接打开之前生成的 PDF 文件。对 :XeTeX 定义了一个 Alt-Shift-x 的快捷键，使用更方便。
+其中 :XeTeX 作为外部命令，执行后会在新控制台窗口调用 xelatex 编译当前的 tex 缓冲区。并在编译无误后，直接用 Windows 的默认软件打开生成的 PDF 文件。而 :PDFTeX 命令则仅打开之前生成的 PDF 文件。对 :XeTeX 定义了一个 Alt-Shift-x 的快捷键，使用更方便。
 
-    如果做得更好一点，还需要判断当前缓冲区是否已经保存。保存了的 tex 编译才更安全。
+如果做得更好一点，还需要判断当前缓冲区是否已经保存。保存了的 tex 编译才更安全。
+
+\section{关于本文}
+本文除了作为一个 w32tex 的安装记录，也作为 {\XeTeX} 在 vim 中的练习。不足之处，敬请见谅。
+
+本文的 {\XeTeX} 源码可以在 \mono{https://github.com/benbearchen/bxmy/tree/master/article} 找到，包括源文件 \mono{xetex\_w32tex.tex} 与中文宏包 \mono{zhfontcfg.sty}。本文使用的字体可以在 \mono{https://github.com/benbearchen/benbeares/tree/master/tex/fonts} 找到。
+
+{\large{谢谢！}}
 
 \section{参考资料}
 \begin{enumerate}
 \item \mono{http://blog.csdn.net/yming0221/article/details/7410027} \\
-LaTeX使用--使用XeLaTeX支持中文（可以放弃Office了） by yming0221 \\
+《LaTeX 使用--使用 XeLaTeX 支持中文（可以放弃 Office了）》 \\
+by yming0221 {\small 注：此文定义了 zhfontcfg 宏包} %\\
 \item \mono{http://electronic-blue.wikidot.com/doc:xetex} \\
-XeTeX 快速上手 by electronic\_blue \\
+《XeTeX 快速上手》 by electronic\_blue \\
 \item \mono{http://w32tex.org/index-zh.html} \\
-w32tex 官方中文说明 \\
+《w32tex 官方中文说明》 \\
 \item \mono{https://wiki.freebsdchina.org/doc/x/xelatex} \\
-TeX 中文化的捷径：使用 xelatex \\
+《TeX 中文化的捷径：使用 xelatex》 \\
+\item \mono{http://vimcdoc.sourceforge.net/doc/cmdline.html} \\
+《VIM 参考手册——命令行模式》 \\
+by Bram Moolenaar 翻译 Dasn, tocer  http://vimcdoc.sf.net \\
 \item \mono{http://www.freezhongzi.info/?p=90} \\
-Windows下去掉Vim执行外部命令的烦人提示 by 波波 \\
+《Windows 下去掉 Vim 执行外部命令的烦人提示》 by 波波 \\
 \end{enumerate}
 \end{document}
 
