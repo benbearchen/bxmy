@@ -10,29 +10,46 @@
 
 \section{下载准备}
 
-XeTeX 可能有很多安装方法，这里使用从 http://w32tex.org/ 下载然后安装的方法。
+XeTeX 可能有很多安装方法，这里使用从 http://w32tex.org/ 下载然后安装的方法。\par
 
 \section{安装过程}
-\subsection{安装目录}
-安装目录可以到某个目录。当然路径名字中没有空格和中文等是安全的。假设要安装到 \mono{C:{\textbackslash}Tools{\textbackslash}XeTex} 。
+\subsection{创建安装目录}
+安装目录可以到某个目录。当然路径名字中没有空格和中文等是安全的。假设要安装到 \mono{C:{\textbackslash}Tools{\textbackslash}XeTex} 。\par
 
 \subsection{解压 XeTeX}
 在 XeTeX 目录下创建 \mono{texinst2013} 目录，再把 texinst2013.zip 的文件解压到此目录下。得到可执行文件：\\
-\mono{XeTeX{\textbackslash}texinst2013{\textbackslash}texinst2013.exe}\\
+\mono{XeTeX{\textbackslash}texinst2013{\textbackslash}texinst2013.exe}\par
 接着把需要安装的包（\mono{*.tar.tx}）拷到比如 \mono{XeTeX{\textbackslash}pkg} 目录下。然后可以在 cmd 下执行如此命令：\\
 \mono{{\textbackslash}> set PATH=\%PATH\%;C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}texinst2013\\
-{\textbackslash}> texinst2013 pkg}\\
-然后就可以等待解压完成。解压完成后，会有添加 PATH 路径的提示，一般是要指 \mono{C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}bin} 目录。添加 PATH 后重新进入 cmd，就可以开始配置字体了。
+{\textbackslash}> texinst2013 pkg}\par
+然后就可以等待解压完成。解压完成后，会有添加 PATH 路径的提示，一般是要指 \mono{C:{\textbackslash}Tools{\textbackslash}XeTeX{\textbackslash}bin} 目录。添加 PATH 后重新进入 cmd，就可以开始配置字体了。\par
 
 \subsection{更新字体}
-以上解压、配置完成以后，就可以扫描字体了。当然首先是把字体安装到系统 \mono{Fonts} 目录。然后在 cmd 执行以下命令：\\
+以上解压、配置完成以后，就可以扫描字体了。当然首先是安装字体。\par
+
+\subsubsection{安装字体}
+包 zhfontcfg.sty 需要几种字体，在资源里已经包含了。把几种字体安装或复制到 Windows 的系统字体目录 \mono{\%Windows\%{\textbackslash}Fonts} 就可以了。\\
+如果你有自己钟爱的字体，当然也是一样装起来就好了。\par
+
+\subsubsection{扫描字体}
+字体安装好后，在 cmd 执行以下命令：\\
 \mono{{\textbackslash}> fc-cache -v}\\
-完成后会提示 \mono{success}，表示系统字体已经缓存好了。
+完成后会提示 \mono{success}，表示系统字体已经缓存好了。\par
 
 \subsection{更新缺失包}
-如果在使用 XeTeX 的过程中发现需要安装当前没有的包，那么把包下载到比如 pkg2 的临时目录，重新执行 \mono{texinst2013 pkg2} 即可（当然要临时修改 PATH）。
+如果在使用 XeTeX 的过程中发现需要安装当前没有的包，那么把包下载到比如 pkg2 的临时目录，重新执行 \mono{texinst2013 pkg2} 即可（当然要临时修改 PATH）。\par
 
 \section{TeX 测试}
+当然我可能喜欢 vim 而没有装专用的 GUI 编辑器，下面说的都是在命令行下编译 PDF。\par
 
+\section{附录}
+\begin{enumerate}
+\item \mono{http://blog.csdn.net/yming0221/article/details/7410027} \\
+LaTeX使用--使用XeLaTeX支持中文（可以放弃Office了） by yming0221 \\
+\item \mono{http://electronic-blue.wikidot.com/doc:xetex} \\
+XeTeX 快速上手 by electronic\_blue \\
+\item \mono{http://w32tex.org/index-zh.html} \\
+w32tex 官方中文说明 \\
+\end{enumerate}
 \end{document}
 

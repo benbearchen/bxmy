@@ -2,6 +2,13 @@
 % from: http://blog.csdn.net/yming0221/article/details/7410027
 
 \ProvidesPackage{zhfontcfg}
+
+\makeatletter
+\let\@afterindentfalse\@afterindenttrue
+\@afterindenttrue
+\makeatother
+\setlength{\parindent} {2em}%中文缩进两个汉字位
+
 \usepackage[cm-default]{fontspec} %[cm-default]选项主要用来解决使用数学环境时数学符号不能正常显示的问题
 
 \usepackage{xunicode,xltxtra}
